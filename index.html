@@ -307,7 +307,6 @@
         .history-list {
             position: absolute;
             top: 100%;
-            left: 0;
             right: 0;
             margin-top: 0.5rem;
             background: white;
@@ -315,6 +314,7 @@
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             max-height: 300px;
+            min-width: 400px;
             overflow-y: auto;
             z-index: 1000;
             display: none;
@@ -469,57 +469,56 @@
                 <h3>Quick Examples:</h3>
                 <div class="example-links">
                     <div class="example-link" onclick="setUrl('wss://stream.binance.com:9443/ws/btcusdt@trade', 'ws')">
-                        <span class="protocol">WSS</span>Binance BTC Trades
+                        <span class="protocol">WSS</span>Binance BTC
                     </div>
                     <div class="example-link" onclick="setUrl('wss://ws.blockchain.info/inv', 'ws')">
-                        <span class="protocol">WSS</span>Bitcoin Transactions
-                    </div>
-                    <div class="example-link" onclick="setUrl('wss://ws.kraken.com', 'ws')">
-                        <span class="protocol">WSS</span>Kraken Market Data
-                    </div>
-                    <div class="example-link" onclick="setUrl('wss://www.seismicportal.eu/standing_order/websocket', 'ws')">
-                        <span class="protocol">WSS</span>Earthquake Events
+                        <span class="protocol">WSS</span>Bitcoin TX
                     </div>
                     <div class="example-link" onclick="setUrl('wss://certstream.calidog.io', 'ws')">
-                        <span class="protocol">WSS</span>SSL Certificates
+                        <span class="protocol">WSS</span>SSL Certs
                     </div>
                     <div class="example-link sse" onclick="setUrl('https://stream.wikimedia.org/v2/stream/recentchange', 'sse')">
-                        <span class="protocol">SSE</span>Wikipedia Edits
+                        <span class="protocol">SSE</span>Wikipedia
                     </div>
                     <div class="example-link sse" onclick="setUrl('https://mcp.dexpaprika.com/sse', 'sse')">
-                        <span class="protocol">SSE</span>Crypto DEX Prices
+                        <span class="protocol">SSE</span>Crypto DEX
                     </div>
                     <div class="example-link sse" onclick="setUrl('https://sse.dev/test', 'sse')">
-                        <span class="protocol">SSE</span>SSE Test Stream
+                        <span class="protocol">SSE</span>Test Stream
                     </div>
                 </div>
             </div>
 
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-label">Messages</div>
-                    <div class="stat-value" id="messageCount">0</div>
+            <div style="display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; margin-top: 1rem;">
+                <div class="chart-container" style="margin-top: 0;">
+                    <canvas id="rateChart"></canvas>
                 </div>
-                <div class="stat">
-                    <div class="stat-label">Data Received</div>
-                    <div class="stat-value" id="dataSize">0 KB</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="stat">
+                        <div class="stat-label">Messages</div>
+                        <div class="stat-value" id="messageCount">0</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Data Size</div>
+                        <div class="stat-value" id="dataSize">0 KB</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Time</div>
+                        <div class="stat-value" id="connectionTime">--:--</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Msg/sec</div>
+                        <div class="stat-value" id="messageRate">0</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Filtered</div>
+                        <div class="stat-value" id="filteredCount">0</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Protocol</div>
+                        <div class="stat-value" id="protocolStat">-</div>
+                    </div>
                 </div>
-                <div class="stat">
-                    <div class="stat-label">Connection Time</div>
-                    <div class="stat-value" id="connectionTime">--:--</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">Msg/sec (avg)</div>
-                    <div class="stat-value" id="messageRate">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">Filtered</div>
-                    <div class="stat-value" id="filteredCount">0</div>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <canvas id="rateChart"></canvas>
             </div>
         </div>
 
@@ -688,6 +687,7 @@
             connectionType = detectProtocol(url);
             updateProtocolBadge(connectionType);
             updateCodeSnippets(url, connectionType);
+            document.getElementById('protocolStat').textContent = connectionType.toUpperCase();
 
             document.getElementById('statusIndicator').className = 'status-indicator connecting';
             document.getElementById('connectBtn').style.display = 'none';
