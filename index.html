@@ -302,6 +302,12 @@
 
         function setUrl(url) {
             document.getElementById('wsUrl').value = url;
+            // Disconnect existing connection if any
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                disconnect();
+            }
+            // Auto-connect after a short delay
+            setTimeout(() => connect(), 300);
         }
 
         function connect() {
