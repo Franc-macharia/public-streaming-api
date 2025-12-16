@@ -9,9 +9,9 @@ This list focuses on real-time or near real-time data accessible via HTTP APIs, 
 
 > **📦 Repository:** [github.com/conduktor/public-streaming-api](https://github.com/conduktor/public-streaming-api) - Contains this README, the interactive viewer source code, and all documentation.
 
-## 🎮 [Try the Live WebSocket Viewer](https://conduktor.github.io/public-streaming-api/)
+## 🎮 [Try the Live Stream Viewer](https://conduktor.github.io/public-streaming-api/)
 
-Test any WebSocket or SSE endpoint instantly in your browser! Click on the 🔴 (WebSocket) or 🟡 (SSE) links below to connect automatically.
+Test any WebSocket, SSE, or HTTP endpoint instantly in your browser! Click on the 🔴 (WebSocket), 🟡 (SSE), or 🔵 (HTTP) links below to connect automatically.
 
 ## Table of Contents
 
@@ -195,12 +195,12 @@ Test any WebSocket or SSE endpoint instantly in your browser! Click on the 🔴 
   https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY
   ```
 
-- **[International Space Station (ISS) Position](http://open-notify.org/Open-Notify-API/ISS-Location-Now/)** - Real-time ISS location. No authentication.
+- **[International Space Station (ISS) Position](http://open-notify.org/Open-Notify-API/ISS-Location-Now/)** - Real-time ISS location. No authentication. [🔵 Try it live](https://conduktor.github.io/public-streaming-api/?http=http://api.open-notify.org/iss-now.json)
   ```
   http://api.open-notify.org/iss-now.json
   ```
 
-- **[SpaceX API](https://github.com/r-spacex/SpaceX-API)** - Real-time data on SpaceX launches, rockets, capsules. No authentication.
+- **[SpaceX API](https://github.com/r-spacex/SpaceX-API)** - Real-time data on SpaceX launches, rockets, capsules. No authentication. [🔵 Try it live](https://conduktor.github.io/public-streaming-api/?http=https://api.spacexdata.com/v4/launches/latest)
   ```
   https://api.spacexdata.com/v4/launches/latest
   ```
