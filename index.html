@@ -640,6 +640,7 @@
                 <div style="margin-top: 1.5rem; padding: 1rem; background: #f7fafc; border-radius: 8px; border-left: 4px solid #667eea;">
                     <h4 style="margin: 0 0 0.5rem 0; color: #2d3748; font-size: 0.95rem;">📝 Usage Instructions</h4>
                     <ol style="margin: 0; padding-left: 1.5rem; color: #4a5568; font-size: 0.875rem; line-height: 1.6;">
+                        <li>Install the required plugin (see Prerequisites above) from its GitHub repository</li>
                         <li>Save the JSON configuration to a file (e.g., <code style="background: #e2e8f0; padding: 0.1rem 0.3rem; border-radius: 3px;">connector.json</code>)</li>
                         <li>Deploy to Kafka Connect REST API:
                             <pre style="margin: 0.5rem 0; padding: 0.5rem; background: white; border-radius: 4px; overflow-x: auto;">curl -X POST http://localhost:8083/connectors \
@@ -648,6 +649,12 @@
                         </li>
                         <li>Monitor connector status: <code style="background: #e2e8f0; padding: 0.1rem 0.3rem; border-radius: 3px;">curl http://localhost:8083/connectors/[name]/status</code></li>
                     </ol>
+                    <p style="margin: 0.75rem 0 0 0; padding-top: 0.75rem; border-top: 1px solid #e2e8f0; color: #4a5568; font-size: 0.875rem;">
+                        💡 <strong>Connector repositories:</strong><br>
+                        • HTTP: <a href="https://github.com/castorm/kafka-connect-http" target="_blank" style="color: #667eea;">kafka-connect-http</a><br>
+                        • SSE: <a href="https://github.com/cjmatta/kafka-connect-sse" target="_blank" style="color: #667eea;">kafka-connect-sse</a><br>
+                        • WebSocket: <a href="https://github.com/Seko47/kafka-connect-websocket" target="_blank" style="color: #667eea;">kafka-connect-websocket</a>
+                    </p>
                 </div>
             </div>
 
@@ -1622,20 +1629,27 @@ done`;
             }
         });
 
-        // Auto-connect from URL parameter
+        // Auto-connect from URL parameter or default stream
         window.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const wssUrl = params.get('wss') || params.get('ws');
             const sseUrl = params.get('sse');
+            const httpUrl = params.get('http');
 
             if (wssUrl) {
                 setUrl(wssUrl, 'ws');
+                connect();
             } else if (sseUrl) {
                 setUrl(sseUrl, 'sse');
+                connect();
+            } else if (httpUrl) {
+                setUrl(httpUrl, 'http');
+                connect();
             } else {
-                // Initialize with default URL
+                // Auto-connect to default stream on page load
                 const defaultUrl = document.getElementById('streamUrl').value;
                 updateCodeSnippets(defaultUrl, 'ws');
+                connect();
             }
         });
 
