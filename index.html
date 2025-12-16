@@ -480,11 +480,6 @@
                     >
                     <span class="protocol-badge" id="protocolBadge">WSS</span>
                 </div>
-                <select id="protocolSelect">
-                    <option value="auto">Auto-detect</option>
-                    <option value="ws">WebSocket</option>
-                    <option value="sse">SSE</option>
-                </select>
                 <button id="connectBtn" onclick="connect()">Connect</button>
                 <button id="disconnectBtn" onclick="disconnect()" style="display: none;" class="disconnect">Disconnect</button>
                 <div class="history-dropdown">
@@ -697,9 +692,9 @@
 
         function setUrl(url, type) {
             document.getElementById('streamUrl').value = url;
-            document.getElementById('protocolSelect').value = type || 'auto';
-            updateProtocolBadge(type || detectProtocol(url));
-            updateCodeSnippets(url, type || detectProtocol(url));
+            const detectedType = type || detectProtocol(url);
+            updateProtocolBadge(detectedType);
+            updateCodeSnippets(url, detectedType);
 
             if (connection) {
                 disconnect();
@@ -725,8 +720,7 @@
             messageRates = [];
             updateStats();
 
-            const protocolSelect = document.getElementById('protocolSelect').value;
-            connectionType = protocolSelect === 'auto' ? detectProtocol(url) : protocolSelect;
+            connectionType = detectProtocol(url);
             updateProtocolBadge(connectionType);
             updateCodeSnippets(url, connectionType);
 
