@@ -582,6 +582,7 @@
         <div class="card">
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('stream')">Live Stream</button>
+                <button class="tab" onclick="switchTab('kafka')">Kafka Connect</button>
                 <button class="tab" onclick="switchTab('code')">Code Snippets</button>
             </div>
 
@@ -613,6 +614,29 @@
                         </div>
                     </div>
                     <button id="scrollToTopBtn" class="scroll-to-top" onclick="scrollOutputToTop()">↑</button>
+                </div>
+            </div>
+
+            <div id="kafkaTab" class="tab-content">
+                <h3 style="margin-bottom: 1rem;">Kafka Connect Configuration</h3>
+                <p style="color: #718096; margin-bottom: 1rem;">Pre-configured connector JSON for streaming this data source into Kafka. Adjust the configuration as needed for your Kafka Connect deployment.</p>
+
+                <div class="code-snippet">
+                    <button class="copy-btn" onclick="copyKafkaConfig()">Copy</button>
+                    <pre id="kafkaConnectorConfig" style="margin: 0; white-space: pre-wrap; word-wrap: break-word;"></pre>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding: 1rem; background: #f7fafc; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #2d3748; font-size: 0.95rem;">📝 Usage Instructions</h4>
+                    <ol style="margin: 0; padding-left: 1.5rem; color: #4a5568; font-size: 0.875rem; line-height: 1.6;">
+                        <li>Save the JSON configuration to a file (e.g., <code style="background: #e2e8f0; padding: 0.1rem 0.3rem; border-radius: 3px;">connector.json</code>)</li>
+                        <li>Deploy to Kafka Connect REST API:
+                            <pre style="margin: 0.5rem 0; padding: 0.5rem; background: white; border-radius: 4px; overflow-x: auto;">curl -X POST http://localhost:8083/connectors \
+  -H "Content-Type: application/json" \
+  -d @connector.json</pre>
+                        </li>
+                        <li>Monitor connector status: <code style="background: #e2e8f0; padding: 0.1rem 0.3rem; border-radius: 3px;">curl http://localhost:8083/connectors/[name]/status</code></li>
+                    </ol>
                 </div>
             </div>
 
@@ -1297,8 +1321,76 @@
             document.getElementById(lang + 'Code').style.display = 'block';
         }
 
+        function updateKafkaConfig(url, type) {
+            const connectorName = url.split('/').pop().replace(/[^a-zA-Z0-9-]/g, '-') || 'stream-source';
+            const topicName = `stream.${connectorName}`;
+
+            let config = {};
+
+            if (type === 'ws' || type === 'wss') {
+                config = {
+                    "name": `websocket-source-${connectorName}`,
+                    "config": {
+                        "connector.class": "io.conduktor.connect.http.HttpSourceConnector",
+                        "tasks.max": "1",
+                        "url": url,
+                        "method": "WEBSOCKET",
+                        "kafka.topic": topicName,
+                        "mode": "streaming",
+                        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+                        "value.converter.schemas.enable": "false",
+                        "key.converter": "org.apache.kafka.connect.storage.StringConverter"
+                    }
+                };
+            } else if (type === 'sse') {
+                config = {
+                    "name": `sse-source-${connectorName}`,
+                    "config": {
+                        "connector.class": "io.conduktor.connect.http.HttpSourceConnector",
+                        "tasks.max": "1",
+                        "url": url,
+                        "method": "GET",
+                        "headers": "Accept: text/event-stream",
+                        "kafka.topic": topicName,
+                        "mode": "streaming",
+                        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+                        "value.converter.schemas.enable": "false",
+                        "key.converter": "org.apache.kafka.connect.storage.StringConverter"
+                    }
+                };
+            } else {
+                // HTTP polling
+                const interval = document.getElementById('pollingInterval')?.value || '10000';
+                config = {
+                    "name": `http-source-${connectorName}`,
+                    "config": {
+                        "connector.class": "io.conduktor.connect.http.HttpSourceConnector",
+                        "tasks.max": "1",
+                        "url": url,
+                        "method": "GET",
+                        "kafka.topic": topicName,
+                        "mode": "polling",
+                        "polling.interval.ms": interval,
+                        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+                        "value.converter.schemas.enable": "false",
+                        "key.converter": "org.apache.kafka.connect.storage.StringConverter"
+                    }
+                };
+            }
+
+            document.getElementById('kafkaConnectorConfig').textContent = JSON.stringify(config, null, 2);
+        }
+
+        function copyKafkaConfig() {
+            const config = document.getElementById('kafkaConnectorConfig').textContent;
+            navigator.clipboard.writeText(config).then(() => {
+                showToast('Kafka configuration copied to clipboard!');
+            });
+        }
+
         function updateCodeSnippets(url, type) {
             const escapedUrl = url.replace(/'/g, "\\'");
+            updateKafkaConfig(url, type);
 
             if (type === 'ws') {
                 // Python WebSocket
