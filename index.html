@@ -797,6 +797,9 @@
                 }
                 connection = null;
             }
+            messageRates = [];
+            lastChartUpdate = Date.now();
+            lastMessageCount = 0;
         }
 
         function togglePause() {
@@ -955,11 +958,24 @@
             }
         }
 
+        // Store message count at each second
+        let lastChartUpdate = Date.now();
+        let lastMessageCount = 0;
+
         function updateChart() {
             const now = Date.now();
-            messageRates.push({ time: now, count: messageCount });
+            const elapsed = (now - lastChartUpdate) / 1000;
 
-            // Keep last 60 data points
+            // Only update chart once per second
+            if (elapsed < 1) return;
+
+            const rate = (messageCount - lastMessageCount) / elapsed;
+            messageRates.push({ time: now, rate: rate });
+
+            lastChartUpdate = now;
+            lastMessageCount = messageCount;
+
+            // Keep last 60 seconds
             if (messageRates.length > 60) {
                 messageRates.shift();
             }
@@ -977,16 +993,9 @@
 
             if (messageRates.length < 2) return;
 
-            // Calculate rates
-            const rates = [];
-            for (let i = 1; i < messageRates.length; i++) {
-                const timeDiff = (messageRates[i].time - messageRates[i-1].time) / 1000;
-                const countDiff = messageRates[i].count - messageRates[i-1].count;
-                rates.push(timeDiff > 0 ? countDiff / timeDiff : 0);
-            }
-
+            const rates = messageRates.map(r => r.rate);
             const maxRate = Math.max(...rates, 1);
-            const step = width / rates.length;
+            const step = width / (messageRates.length - 1);
 
             // Draw grid
             rateCtx.strokeStyle = '#e2e8f0';
@@ -999,14 +1008,14 @@
                 rateCtx.stroke();
             }
 
-            // Draw line
+            // Draw line with gradient fill
             rateCtx.strokeStyle = '#667eea';
             rateCtx.lineWidth = 2;
             rateCtx.beginPath();
 
             rates.forEach((rate, i) => {
                 const x = i * step;
-                const y = height - (rate / maxRate) * height;
+                const y = height - (rate / maxRate) * (height - 30); // Leave space for labels
                 if (i === 0) {
                     rateCtx.moveTo(x, y);
                 } else {
@@ -1016,10 +1025,29 @@
 
             rateCtx.stroke();
 
-            // Draw label
+            // Fill area under line
+            rateCtx.lineTo(width, height - 30);
+            rateCtx.lineTo(0, height - 30);
+            rateCtx.closePath();
+            rateCtx.fillStyle = 'rgba(102, 126, 234, 0.1)';
+            rateCtx.fill();
+
+            // Draw labels
             rateCtx.fillStyle = '#4a5568';
             rateCtx.font = '12px sans-serif';
             rateCtx.fillText(`Max: ${maxRate.toFixed(1)} msg/s`, 10, 20);
+
+            // Draw time labels on x-axis
+            if (messageRates.length > 0) {
+                const oldest = messageRates[0].time;
+                const newest = messageRates[messageRates.length - 1].time;
+                const duration = (newest - oldest) / 1000;
+
+                rateCtx.fillStyle = '#718096';
+                rateCtx.font = '10px sans-serif';
+                rateCtx.fillText(`-${duration.toFixed(0)}s`, 5, height - 5);
+                rateCtx.fillText('now', width - 30, height - 5);
+            }
         }
 
         function startTimer() {
