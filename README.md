@@ -1,14 +1,17 @@
 # Awesome Free Public Real-Time Data Sources
 
 [![Awesome](https://awesome.re/badge-flat.svg)](https://awesome.re)
+[![GitHub](https://img.shields.io/badge/GitHub-conduktor%2Fpublic--streaming--api-blue?logo=github)](https://github.com/conduktor/public-streaming-api)
 
 A curated list of **truly free**, publicly accessible real-time datasets and streaming sources. All sources listed below are accessible without API keys, authentication, or paid subscriptions (though some may have rate limits or usage caps on free tiers).
 
 This list focuses on real-time or near real-time data accessible via HTTP APIs, WebSockets, SSE (Server-Sent Events), or other streaming protocols.
 
+> **📦 Repository:** [github.com/conduktor/public-streaming-api](https://github.com/conduktor/public-streaming-api) - Contains this README, the interactive viewer source code, and all documentation.
+
 ## 🎮 [Try the Live WebSocket Viewer](https://conduktor.github.io/public-streaming-api/)
 
-Test any WebSocket endpoint instantly in your browser! Click on WebSocket links below to connect automatically.
+Test any WebSocket or SSE endpoint instantly in your browser! Click on the 🔴 (WebSocket) or 🟡 (SSE) links below to connect automatically.
 
 ## Table of Contents
 
