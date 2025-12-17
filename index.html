@@ -596,8 +596,8 @@
                             <button onclick="refreshNow()" class="secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">🔄 Refresh</button>
                             <button onclick="toggleAutoRefresh()" id="autoRefreshBtn" class="secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">▶ Auto</button>
                             <select id="pollingInterval" style="padding: 0.5rem; font-size: 0.875rem; border: 2px solid #e2e8f0; border-radius: 6px;">
-                                <option value="5000">5s</option>
-                                <option value="10000" selected>10s</option>
+                                <option value="5000" selected>5s</option>
+                                <option value="10000">10s</option>
                                 <option value="30000">30s</option>
                                 <option value="60000">60s</option>
                             </select>
@@ -959,6 +959,14 @@
 
             // Initial fetch
             await fetchHTTP(url);
+
+            // Enable auto-refresh by default
+            autoRefreshEnabled = true;
+            const btn = document.getElementById('autoRefreshBtn');
+            btn.textContent = '⏸ Auto';
+            btn.style.background = '#667eea';
+            btn.style.color = 'white';
+            startPolling();
         }
 
         async function fetchHTTP(url) {
