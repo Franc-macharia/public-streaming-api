@@ -27,7 +27,7 @@
         .card {
             background: white;
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1rem;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             margin-bottom: 1.5rem;
         }
@@ -385,32 +385,36 @@
         }
 
         .tabs {
-            display: flex;
-            gap: 0.5rem;
+            display: inline-flex;
+            gap: 0;
             margin-bottom: 1rem;
-            border-bottom: 2px solid #e2e8f0;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 4px;
+            border: none;
         }
 
         .tab {
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             background: transparent;
             border: none;
-            border-bottom: 2px solid transparent;
             cursor: pointer;
-            font-weight: 600;
-            color: #718096;
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: #64748b;
             transition: all 0.2s;
-            margin-bottom: -2px;
+            border-radius: 6px;
+            white-space: nowrap;
         }
 
         .tab.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
+            background: white;
+            color: #1e293b;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .tab:hover {
-            background: #f7fafc;
-            transform: none;
+            color: #1e293b;
         }
 
         .tab-content {
