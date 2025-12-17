@@ -816,10 +816,14 @@
             }
 
             // Check for mixed content (HTTP URL on HTTPS page)
-            if (window.location.protocol === 'https:' &&
-                (url.startsWith('http://') || url.startsWith('ws://'))) {
-                showToast('⚠️ Cannot connect to HTTP/WS from HTTPS page (mixed content blocked). Use HTTPS/WSS or run locally.', 5000);
+            if (window.location.protocol === 'https:' && url.startsWith('ws://')) {
+                showToast('⚠️ Cannot connect to WS from HTTPS page (mixed content blocked). Use WSS or run locally.', 5000);
                 return;
+            }
+
+            // Notify user if HTTP URL will be proxied through CORS proxy
+            if (window.location.protocol === 'https:' && url.startsWith('http://')) {
+                showToast('ℹ️ Using CORS proxy (allorigins.win) for HTTP endpoint', 4000);
             }
 
             if (connection) {
@@ -1004,7 +1008,13 @@
                 // Create new abort controller for this request
                 httpAbortController = new AbortController();
 
-                const response = await fetch(url, { signal: httpAbortController.signal });
+                // Use CORS proxy if HTTP URL on HTTPS page
+                let fetchUrl = url;
+                if (window.location.protocol === 'https:' && url.startsWith('http://')) {
+                    fetchUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                }
+
+                const response = await fetch(fetchUrl, { signal: httpAbortController.signal });
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
