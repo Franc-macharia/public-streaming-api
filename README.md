@@ -7,8 +7,6 @@ A curated list of **truly free**, publicly accessible real-time datasets and str
 
 This list focuses on real-time or near real-time data accessible via HTTP APIs, WebSockets, SSE (Server-Sent Events), or other streaming protocols.
 
-> **📦 Repository:** [github.com/conduktor/public-streaming-api](https://github.com/conduktor/public-streaming-api) - Contains this README, the interactive viewer source code, and all documentation.
-
 ## 🎮 [Try the Live Stream Viewer](https://conduktor.github.io/public-streaming-api/)
 
 Test any WebSocket, SSE, or HTTP endpoint instantly in your browser! Click on the 🔴 (WebSocket), 🟡 (SSE), or 🔵 (HTTP) links below to connect automatically.
