@@ -11,6 +11,10 @@ This list focuses on real-time or near real-time data accessible via HTTP APIs, 
 
 Test any WebSocket, SSE, or HTTP endpoint instantly in your browser!
 
+## 🔌 Stream to Kafka
+
+Want to stream these real-time sources into Apache Kafka? Check out our **[Kafka Connect WebSocket Plugin](https://github.com/conduktor/kafka-connect-plugin-oss)** - an open-source connector that lets you ingest WebSocket streams directly into Kafka topics.
+
 ## Table of Contents
 
 - [Finance & Cryptocurrency](#finance--cryptocurrency)
