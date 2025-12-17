@@ -395,16 +395,18 @@
         }
 
         .tab {
-            padding: 0.5rem 1rem;
+            padding: 0.625rem 1.25rem;
             background: transparent;
             border: none;
             cursor: pointer;
             font-weight: 500;
-            font-size: 0.875rem;
+            font-size: 0.9375rem;
             color: #64748b;
             transition: all 0.2s;
             border-radius: 6px;
             white-space: nowrap;
+            outline: none;
+            text-decoration: none;
         }
 
         .tab.active {
@@ -415,6 +417,15 @@
 
         .tab:hover {
             color: #1e293b;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .tab:focus {
+            outline: none;
+        }
+
+        .tab:active {
+            transform: scale(0.98);
         }
 
         .tab-content {
@@ -585,7 +596,7 @@
 
         <div class="card">
             <div class="tabs">
-                <button class="tab active" onclick="switchTab('stream')">Live Stream</button>
+                <button class="tab active" onclick="switchTab('stream')">📡 Live Stream</button>
                 <button class="tab" onclick="switchTab('kafka')">Kafka Connect</button>
                 <button class="tab" onclick="switchTab('code')">Code Snippets</button>
             </div>
